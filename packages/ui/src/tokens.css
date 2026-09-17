@@ -1,0 +1,7 @@
+:root {
+  /* Tokens derive from design_system.tokens in spec/metrika.spec.json. */
+  /* Full emission is scheduled for phase P08 (legacy widget kit). */
+  --surface: #d4d0c8;
+  --field: #ffffff;
+  --ink: #000000;
+}

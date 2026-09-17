@@ -1,0 +1,4 @@
+spec/metrika.spec.json
+pnpm-lock.yaml
+**/generated/**
+docs/

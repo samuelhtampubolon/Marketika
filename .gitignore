@@ -1,0 +1,7 @@
+node_modules/
+dist/
+docs/
+coverage/
+packages/desktop/src-tauri/target/
+*.tsbuildinfo
+.DS_Store
