@@ -6,6 +6,14 @@ import type { Relation } from "../../relation";
 export const relation: Relation = {
   formulaId: "cost_of_delay",
   structuralClass: "C3",
+  validation: {
+    structuralClass: "C3",
+    engineRule: "null is not zero; distinguish None from 0.0 in the store and in the renderer",
+    guardZeroDenominator: true,
+    rejectNegativeCounts: true,
+    warnOnExtreme: true,
+    denominatorVars: ["delta_time", "result"],
+  },
   inputs: ["delta_value", "delta_time"],
   output: null,
   forward: (env) => (env.num("delta_value") / env.num("delta_time")),

@@ -14,6 +14,16 @@ export { getVariable, requireVariable, allVariables, labelFor } from "./variable
 export { relations, relationsById } from "./formulas/index";
 export { type Relation, type Env, type CalcResult } from "./relation";
 export { DomainViolation } from "./validate/domain";
+export { checkInputs, checkOutputRange, type GuardResult } from "./validate/sanity";
+export { message, VALIDATION_MESSAGES, type MessageKey } from "./validate/messages";
+export {
+  PERIODS,
+  periodsPerYear,
+  assertSamePeriod,
+  compoundMonthlyToAnnual,
+  refuseNaiveAnnualization,
+  type Period,
+} from "./validate/period";
 export { seriesSum } from "./helpers/series";
 export { npvCalc } from "./helpers/npv";
 export { dot, matvec } from "./helpers/linalg";

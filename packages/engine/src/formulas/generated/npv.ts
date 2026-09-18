@@ -7,6 +7,14 @@ import { npvCalc } from "../../helpers/npv";
 export const relation: Relation = {
   formulaId: "npv",
   structuralClass: "C6",
+  validation: {
+    structuralClass: "C6",
+    engineRule: "discount_rate and horizon are mandatory output annotations, never optional",
+    guardZeroDenominator: true,
+    rejectNegativeCounts: true,
+    warnOnExtreme: true,
+    denominatorVars: [],
+  },
   inputs: ["cash_flows", "discount_rate", "investment_0"],
   output: "npv_out",
   forward: (env) => (npvCalc(env.vec("cash_flows"), env.num("discount_rate")) - env.num("investment_0")),

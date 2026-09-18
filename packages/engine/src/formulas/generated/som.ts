@@ -6,6 +6,14 @@ import type { Relation } from "../../relation";
 export const relation: Relation = {
   formulaId: "som",
   structuralClass: "C4",
+  validation: {
+    structuralClass: "C4",
+    engineRule: "auto-run one-at-a-time sensitivity at plus and minus 10 percent for every factor",
+    guardZeroDenominator: true,
+    rejectNegativeCounts: true,
+    warnOnExtreme: true,
+    denominatorVars: ["capture_percent", "sam"],
+  },
   inputs: ["sam", "capture_percent"],
   output: null,
   forward: (env) => (env.num("sam") * (env.num("capture_percent") / 100)),

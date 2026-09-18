@@ -6,6 +6,14 @@ import type { Relation } from "../../relation";
 export const relation: Relation = {
   formulaId: "fmea_rpn",
   structuralClass: "C4",
+  validation: {
+    structuralClass: "C4",
+    engineRule: "auto-run one-at-a-time sensitivity at plus and minus 10 percent for every factor",
+    guardZeroDenominator: true,
+    rejectNegativeCounts: true,
+    warnOnExtreme: true,
+    denominatorVars: ["occurrence", "severity"],
+  },
   inputs: ["severity", "occurrence", "detection"],
   output: null,
   forward: (env) => (env.num("severity") * env.num("occurrence") * env.num("detection")),

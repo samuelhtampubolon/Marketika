@@ -6,6 +6,14 @@ import type { Relation } from "../../relation";
 export const relation: Relation = {
   formulaId: "market_share",
   structuralClass: "C1",
+  validation: {
+    structuralClass: "C1",
+    engineRule: "assert 0 <= result <= 1 else raise DomainViolation",
+    guardZeroDenominator: true,
+    rejectNegativeCounts: true,
+    warnOnExtreme: true,
+    denominatorVars: ["market_sales", "company_share"],
+  },
   inputs: ["company_sales", "market_sales"],
   output: "company_share",
   forward: (env) => (env.num("company_sales") / env.num("market_sales")),

@@ -6,6 +6,14 @@ import type { Relation } from "../../relation";
 export const relation: Relation = {
   formulaId: "rfm_score",
   structuralClass: "C5",
+  validation: {
+    structuralClass: "C5",
+    engineRule: "require weight_provenance field; run rank-stability perturbation test",
+    guardZeroDenominator: true,
+    rejectNegativeCounts: true,
+    warnOnExtreme: true,
+    denominatorVars: ["rfm_wr", "rfm_wf", "rfm_wm"],
+  },
   inputs: ["rfm_r", "rfm_f", "rfm_m", "rfm_wr", "rfm_wf", "rfm_wm"],
   output: null,
   forward: (env) => (env.num("rfm_wr") * env.num("rfm_r") + env.num("rfm_wf") * env.num("rfm_f") + env.num("rfm_wm") * env.num("rfm_m")),

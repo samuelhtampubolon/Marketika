@@ -6,6 +6,14 @@ import type { Relation } from "../../relation";
 export const relation: Relation = {
   formulaId: "roas",
   structuralClass: "C2",
+  validation: {
+    structuralClass: "C2",
+    engineRule: "require cost_scope metadata; refuse cross-entity comparison when scopes differ",
+    guardZeroDenominator: true,
+    rejectNegativeCounts: true,
+    warnOnExtreme: true,
+    denominatorVars: ["ad_cost", "result"],
+  },
   inputs: ["ad_revenue", "ad_cost"],
   output: null,
   forward: (env) => (env.num("ad_revenue") / env.num("ad_cost")),

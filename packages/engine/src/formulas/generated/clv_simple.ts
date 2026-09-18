@@ -6,6 +6,14 @@ import type { Relation } from "../../relation";
 export const relation: Relation = {
   formulaId: "clv_simple",
   structuralClass: "C6",
+  validation: {
+    structuralClass: "C6",
+    engineRule: "discount_rate and horizon are mandatory output annotations, never optional",
+    guardZeroDenominator: true,
+    rejectNegativeCounts: true,
+    warnOnExtreme: true,
+    denominatorVars: ["churn_rate", "gross_margin", "arpu", "result"],
+  },
   inputs: ["arpu", "gross_margin", "churn_rate"],
   output: null,
   forward: (env) => ((env.num("arpu") * env.num("gross_margin")) / env.num("churn_rate")),

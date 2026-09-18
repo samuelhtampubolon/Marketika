@@ -14,7 +14,13 @@ interface SpecFormula {
   inputs: SpecInputRef[];
   output: { canonical_variable_id: string | null } | null;
   inverse_solutions: { solve_for: string; javascript: string }[];
-  validation: { structural_class: string };
+  validation: {
+    structural_class: string;
+    engine_rule: string;
+    guard_zero_denominator: boolean;
+    reject_negative_counts: boolean;
+    warn_on_extreme: boolean;
+  };
 }
 
 interface SpecVariableRaw {
@@ -33,6 +39,20 @@ const HELPER_JS: Record<string, { js: string; module: string }> = {
 };
 
 type Accessor = "num" | "vec" | "mat";
+
+function denominatorVars(js: string, accessorFor: Map<string, Accessor>): string[] {
+  const found: string[] = [];
+  const re = /\/\s*\(?([A-Za-z_][A-Za-z0-9_]*)\)?/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(js)) !== null) {
+    const name = m[1];
+    if (name === undefined) continue;
+    if (name === "Math") continue;
+    if (HELPER_JS[name] !== undefined) continue;
+    if (accessorFor.get(name) === "num" && !found.includes(name)) found.push(name);
+  }
+  return found;
+}
 
 function compileExpression(
   js: string,
@@ -103,12 +123,23 @@ function buildFormula(f: SpecFormula, kinds: Map<string, string>): string {
     imports.push(`import { ${names.sort().join(", ")} } from "${mod}";`);
   }
 
+  const allJs = [f.expression.javascript, ...f.inverse_solutions.map((i) => i.javascript)].join(" ; ");
+  const denoms = denominatorVars(allJs, accessorFor);
+
   const body = [
     ...imports,
     "",
     "export const relation: Relation = {",
     `  formulaId: ${JSON.stringify(f.id)},`,
     `  structuralClass: ${JSON.stringify(f.validation.structural_class)},`,
+    "  validation: {",
+    `    structuralClass: ${JSON.stringify(f.validation.structural_class)},`,
+    `    engineRule: ${JSON.stringify(f.validation.engine_rule)},`,
+    `    guardZeroDenominator: ${f.validation.guard_zero_denominator ? "true" : "false"},`,
+    `    rejectNegativeCounts: ${f.validation.reject_negative_counts ? "true" : "false"},`,
+    `    warnOnExtreme: ${f.validation.warn_on_extreme ? "true" : "false"},`,
+    `    denominatorVars: [${denoms.map((d) => JSON.stringify(d)).join(", ")}],`,
+    "  },",
     `  inputs: [${f.inputs.map((i) => JSON.stringify(i.variable_id)).join(", ")}],`,
     `  output: ${outputId === null ? "null" : JSON.stringify(outputId)},`,
     `  forward: (env) => (${forwardCode}),`,

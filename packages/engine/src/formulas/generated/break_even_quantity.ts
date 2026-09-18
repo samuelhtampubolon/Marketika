@@ -6,6 +6,14 @@ import type { Relation } from "../../relation";
 export const relation: Relation = {
   formulaId: "break_even_quantity",
   structuralClass: "C2",
+  validation: {
+    structuralClass: "C2",
+    engineRule: "require cost_scope metadata; refuse cross-entity comparison when scopes differ",
+    guardZeroDenominator: true,
+    rejectNegativeCounts: true,
+    warnOnExtreme: true,
+    denominatorVars: ["price", "result"],
+  },
   inputs: ["fixed_cost", "price", "variable_cost"],
   output: null,
   forward: (env) => (env.num("fixed_cost") / (env.num("price") - env.num("variable_cost"))),
