@@ -5,7 +5,7 @@ import { dot, matvec } from "../src/helpers/linalg";
 import { phi } from "../src/helpers/normal";
 import { blackScholesCall } from "../src/helpers/blackScholes";
 import { irrSolve } from "../src/helpers/irr";
-import { vwIntersection } from "../src/helpers/vanWestendorp";
+import { vwIntersection, vwFromFourPrices } from "../src/helpers/vanWestendorp";
 
 describe("seriesSum", () => {
   it("sums retention/discount powers per specification", () => {
@@ -130,5 +130,22 @@ describe("vwIntersection", () => {
 
   it("rejects a degenerate grid", () => {
     expect(() => vwIntersection([{ price: 100, tooCheap: 0, cheap: 0, expensive: 0, tooExpensive: 0 }])).toThrow(/price points|responses/);
+  });
+});
+
+describe("vwFromFourPrices", () => {
+  it("matches the specification worked example anchors", () => {
+    const r = vwFromFourPrices(45000, 78000, 135000, 195000);
+    expect(r.opp).toBeCloseTo(73125, 0);
+    expect(r.ipp).toBeCloseTo(98873.24, 2);
+    expect(r.pmc).toBeCloseTo(57073.17, 2);
+    expect(r.pme).toBeCloseTo(159545.45, 2);
+    expect(r.pmc!).toBeLessThan(r.opp!);
+    expect(r.opp!).toBeLessThan(r.ipp!);
+    expect(r.ipp!).toBeLessThan(r.pme!);
+  });
+
+  it("rejects unsorted anchors", () => {
+    expect(() => vwFromFourPrices(80, 50, 90, 100)).toThrow(/tooCheap/);
   });
 });

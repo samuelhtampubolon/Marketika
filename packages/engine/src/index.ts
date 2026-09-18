@@ -11,6 +11,8 @@ export type {
 } from "./variables/types";
 export { variableRegistry, variableIds } from "./variables/generated/registry";
 export { getVariable, requireVariable, allVariables, labelFor } from "./variables/registry";
+export { relations, relationsById } from "./formulas/index";
+export { type Relation, type Env, type CalcResult } from "./relation";
 export { DomainViolation } from "./validate/domain";
 export { seriesSum } from "./helpers/series";
 export { npvCalc } from "./helpers/npv";
@@ -20,6 +22,7 @@ export { blackScholesCall } from "./helpers/blackScholes";
 export { irrSolve, type IrrResult } from "./helpers/irr";
 export {
   vwIntersection,
+  vwFromFourPrices,
   type PriceResponse,
   type VwCurve,
   type VwResult,

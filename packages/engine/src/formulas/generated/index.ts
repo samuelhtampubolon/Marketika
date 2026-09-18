@@ -1,0 +1,86 @@
+/* GENERATED FILE - do not edit. */
+/* Emitted by @metrika/codegen from spec/metrika.spec.json. */
+/* eslint-disable */
+import type { Relation } from "../../relation";
+import { relation as r_ctr } from "./ctr";
+import { relation as r_conversion_rate } from "./conversion_rate";
+import { relation as r_engagement_rate } from "./engagement_rate";
+import { relation as r_bounce_rate } from "./bounce_rate";
+import { relation as r_cart_abandonment_rate } from "./cart_abandonment_rate";
+import { relation as r_aov } from "./aov";
+import { relation as r_arpu } from "./arpu";
+import { relation as r_arppu } from "./arppu";
+import { relation as r_purchase_frequency } from "./purchase_frequency";
+import { relation as r_cpm } from "./cpm";
+import { relation as r_cpc } from "./cpc";
+import { relation as r_cpl } from "./cpl";
+import { relation as r_cpa } from "./cpa";
+import { relation as r_churn_rate } from "./churn_rate";
+import { relation as r_retention_rate } from "./retention_rate";
+import { relation as r_mql_to_sql_rate } from "./mql_to_sql_rate";
+import { relation as r_lead_to_customer_rate } from "./lead_to_customer_rate";
+import { relation as r_market_share } from "./market_share";
+import { relation as r_penetration_rate } from "./penetration_rate";
+import { relation as r_sov } from "./sov";
+import { relation as r_sos } from "./sos";
+import { relation as r_csat } from "./csat";
+import { relation as r_nps } from "./nps";
+import { relation as r_ces } from "./ces";
+import { relation as r_gross_margin } from "./gross_margin";
+import { relation as r_net_margin } from "./net_margin";
+import { relation as r_contribution_margin } from "./contribution_margin";
+import { relation as r_break_even_quantity } from "./break_even_quantity";
+import { relation as r_mrr } from "./mrr";
+import { relation as r_arr } from "./arr";
+import { relation as r_mrr_churn_rate } from "./mrr_churn_rate";
+import { relation as r_cac } from "./cac";
+import { relation as r_payback_period } from "./payback_period";
+import { relation as r_roas } from "./roas";
+import { relation as r_roi } from "./roi";
+import { relation as r_romi } from "./romi";
+import { relation as r_relative_market_share } from "./relative_market_share";
+import { relation as r_clv_simple } from "./clv_simple";
+import { relation as r_clv } from "./clv";
+import { relation as r_ltv_cac_ratio } from "./ltv_cac_ratio";
+import { relation as r_rfm_score } from "./rfm_score";
+import { relation as r_sales_velocity } from "./sales_velocity";
+import { relation as r_pipeline_coverage } from "./pipeline_coverage";
+import { relation as r_forecast_accuracy } from "./forecast_accuracy";
+import { relation as r_gdr } from "./gdr";
+import { relation as r_ndr } from "./ndr";
+import { relation as r_k_factor } from "./k_factor";
+import { relation as r_grp } from "./grp";
+import { relation as r_net_reach } from "./net_reach";
+import { relation as r_effective_frequency } from "./effective_frequency";
+import { relation as r_tam } from "./tam";
+import { relation as r_sam } from "./sam";
+import { relation as r_som } from "./som";
+import { relation as r_price_elasticity } from "./price_elasticity";
+import { relation as r_cross_elasticity } from "./cross_elasticity";
+import { relation as r_income_elasticity } from "./income_elasticity";
+import { relation as r_van_westendorp } from "./van_westendorp";
+import { relation as r_gabor_granger } from "./gabor_granger";
+import { relation as r_conjoint_utility } from "./conjoint_utility";
+import { relation as r_wtp } from "./wtp";
+import { relation as r_kano_better } from "./kano_better";
+import { relation as r_kano_worse } from "./kano_worse";
+import { relation as r_opportunity_score } from "./opportunity_score";
+import { relation as r_qfd_technical_importance } from "./qfd_technical_importance";
+import { relation as r_bass_f } from "./bass_f";
+import { relation as r_bass_n } from "./bass_n";
+import { relation as r_weighted_screening } from "./weighted_screening";
+import { relation as r_rice_score } from "./rice_score";
+import { relation as r_cost_of_delay } from "./cost_of_delay";
+import { relation as r_wsjf_score } from "./wsjf_score";
+import { relation as r_fmea_rpn } from "./fmea_rpn";
+import { relation as r_npv } from "./npv";
+import { relation as r_irr } from "./irr";
+import { relation as r_ev } from "./ev";
+import { relation as r_evpi } from "./evpi";
+import { relation as r_real_options_value } from "./real_options_value";
+
+export const relations: readonly Relation[] = Object.freeze([r_ctr, r_conversion_rate, r_engagement_rate, r_bounce_rate, r_cart_abandonment_rate, r_aov, r_arpu, r_arppu, r_purchase_frequency, r_cpm, r_cpc, r_cpl, r_cpa, r_churn_rate, r_retention_rate, r_mql_to_sql_rate, r_lead_to_customer_rate, r_market_share, r_penetration_rate, r_sov, r_sos, r_csat, r_nps, r_ces, r_gross_margin, r_net_margin, r_contribution_margin, r_break_even_quantity, r_mrr, r_arr, r_mrr_churn_rate, r_cac, r_payback_period, r_roas, r_roi, r_romi, r_relative_market_share, r_clv_simple, r_clv, r_ltv_cac_ratio, r_rfm_score, r_sales_velocity, r_pipeline_coverage, r_forecast_accuracy, r_gdr, r_ndr, r_k_factor, r_grp, r_net_reach, r_effective_frequency, r_tam, r_sam, r_som, r_price_elasticity, r_cross_elasticity, r_income_elasticity, r_van_westendorp, r_gabor_granger, r_conjoint_utility, r_wtp, r_kano_better, r_kano_worse, r_opportunity_score, r_qfd_technical_importance, r_bass_f, r_bass_n, r_weighted_screening, r_rice_score, r_cost_of_delay, r_wsjf_score, r_fmea_rpn, r_npv, r_irr, r_ev, r_evpi, r_real_options_value]);
+
+export const relationsById: Readonly<Record<string, Relation>> = Object.freeze(
+  Object.fromEntries(relations.map((r) => [r.formulaId, r])),
+);

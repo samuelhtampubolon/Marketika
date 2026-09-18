@@ -131,3 +131,62 @@ export function vwIntersection(responses: PriceResponse[]): VwResult {
     curves,
   };
 }
+
+export interface FourPriceAnchors {
+  tooCheap: number;
+  cheap: number;
+  expensive: number;
+  tooExpensive: number;
+}
+
+export function vwFromFourPrices(
+  tooCheap: number,
+  cheap: number,
+  expensive: number,
+  tooExpensive: number,
+): VwResult {
+  const a = { tooCheap, cheap, expensive, tooExpensive };
+  if (a.tooCheap > a.cheap || a.cheap > a.expensive || a.expensive > a.tooExpensive) {
+    throw new DomainViolation(
+      "vw_anchors",
+      "vwFromFourPrices: anchor prices must satisfy tooCheap <= cheap <= expensive <= tooExpensive",
+    );
+  }
+  const half = (x: number, y: number): number => (2 * x * y) / (x + y);
+  return {
+    opp: half(a.tooCheap, a.tooExpensive),
+    ipp: half(a.cheap, a.expensive),
+    pmc: half(a.tooCheap, a.cheap),
+    pme: half(a.expensive, a.tooExpensive),
+    curves: [
+      {
+        name: "too_cheap",
+        points: [
+          { price: 0, value: 1 },
+          { price: 2 * a.tooCheap, value: 0 },
+        ],
+      },
+      {
+        name: "cheap",
+        points: [
+          { price: 0, value: 0 },
+          { price: 2 * a.cheap, value: 1 },
+        ],
+      },
+      {
+        name: "expensive",
+        points: [
+          { price: 0, value: 1 },
+          { price: 2 * a.expensive, value: 0 },
+        ],
+      },
+      {
+        name: "too_expensive",
+        points: [
+          { price: 0, value: 0 },
+          { price: 2 * a.tooExpensive, value: 1 },
+        ],
+      },
+    ],
+  };
+}
