@@ -2,7 +2,13 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   {
-    ignores: ["**/dist/**", "**/node_modules/**", "docs/**", "packages/*/src/**/generated/**"],
+    ignores: [
+      "**/dist/**",
+      "**/node_modules/**",
+      "docs/**",
+      "packages/*/src/**/generated/**",
+      "packages/engine/test/golden/**",
+    ],
   },
   ...tseslint.configs.recommended,
   {

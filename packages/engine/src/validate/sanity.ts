@@ -1,5 +1,4 @@
 import type { Relation, Env } from "../relation";
-import { DomainViolation } from "./domain";
 import { message } from "./messages";
 import { labelFor } from "../variables/registry";
 import { formatNumber } from "../format";
