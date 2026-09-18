@@ -24,6 +24,26 @@ export {
   refuseNaiveAnnualization,
   type Period,
 } from "./validate/period";
+export { propagate } from "./graph/propagate";
+export {
+  makeUserValue,
+  type Value,
+  type Origin,
+  type Confidence,
+  type DerivationStep,
+  type BlockedStep,
+  type Conflict,
+  type PropagationOptions,
+  type PropagationResult,
+} from "./graph/types";
+export { buildGraph, type GraphIndex } from "./graph/build";
+export {
+  underdetermined,
+  describeUnderdetermined,
+  derivationProse,
+  type Frontier,
+  type UnderdeterminedReport,
+} from "./graph/explain";
 export { seriesSum } from "./helpers/series";
 export { npvCalc } from "./helpers/npv";
 export { dot, matvec } from "./helpers/linalg";

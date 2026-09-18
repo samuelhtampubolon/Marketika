@@ -24,16 +24,31 @@ interface SpecInverse {
   javascript: string;
 }
 
+interface SpecBand {
+  lower: number;
+  upper: number;
+}
+
 interface SpecFormula {
   id: string;
   inputs: SpecInputRef[];
   output: SpecOutputRef | null;
   inverse_solutions: SpecInverse[];
+  interpretation_bands?: SpecBand[];
+}
+
+interface SpecCoord {
+  id: string;
+  A: string;
+  B: string;
+  C: string;
+  D: string;
 }
 
 interface Spec {
   canonical_variables: SpecVariable[];
   formula_registry: SpecFormula[];
+  coordinate_matrix: SpecCoord[];
 }
 
 const failures: string[] = [];
@@ -97,6 +112,47 @@ function main(): void {
     spec.formula_registry.length === 76,
     `formula count ${spec.formula_registry.length} !== 76`,
   );
+
+  const coordsById = new Map<string, SpecCoord>();
+  for (const c of spec.coordinate_matrix) {
+    check(!coordsById.has(c.id), `duplicate coordinate row: ${c.id}`);
+    check(variableIds.size > 0, "variables must precede coordinates");
+    coordsById.set(c.id, c);
+  }
+  for (const f of spec.formula_registry) {
+    const c = coordsById.get(f.id);
+    check(c !== undefined, `formula ${f.id} has no coordinate row`);
+    if (c !== undefined) {
+      for (const axis of ["A", "B", "C", "D"] as const) {
+        check(
+          typeof c[axis] === "string" && c[axis].length > 0,
+          `formula ${f.id} missing coordinate on axis ${axis}`,
+        );
+      }
+    }
+  }
+  check(
+    spec.coordinate_matrix.length === spec.formula_registry.length,
+    `coordinate rows ${spec.coordinate_matrix.length} !== formulas ${spec.formula_registry.length}`,
+  );
+
+  for (const f of spec.formula_registry) {
+    const bands = f.interpretation_bands ?? [];
+    for (let i = 1; i < bands.length; i++) {
+      const prev = bands[i - 1];
+      const cur = bands[i];
+      if (prev && cur) {
+        check(
+          Math.abs(prev.upper - cur.lower) < 1e-9,
+          `${f.id}: interpretation bands ${i} and ${i + 1} are not contiguous`,
+        );
+        check(
+          cur.lower < cur.upper,
+          `${f.id}: interpretation band ${i + 1} is not increasing`,
+        );
+      }
+    }
+  }
 
   if (failures.length > 0) {
     console.error(`verify: ${failures.length} failure(s)`);
