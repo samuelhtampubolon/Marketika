@@ -1,0 +1,52 @@
+name: "Build Windows Desktop App"
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-tauri:
+    name: Build Tauri Windows
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 12.4.2
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-pc-windows-msvc
+
+      - name: Cache Rust dependencies
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            packages/desktop/src-tauri -> target
+
+      - name: Build Tauri App
+        run: pnpm --filter @marketika/desktop build
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Marketika-Windows-Installer
+          path: packages/desktop/src-tauri/target/release/bundle/nsis/*.exe
+          if-no-files-found: error
