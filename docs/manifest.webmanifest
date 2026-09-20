@@ -1,0 +1,10 @@
+{
+  "name": "Marketika",
+  "short_name": "Marketika",
+  "lang": "id",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#d4d0c8",
+  "theme_color": "#000080",
+  "icons": []
+}
