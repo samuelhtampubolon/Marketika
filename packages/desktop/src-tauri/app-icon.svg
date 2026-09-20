@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="50%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="chart" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Background rounded squircle -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+
+  <!-- Subtle glow / inner border -->
+  <rect x="8" y="8" width="496" height="496" rx="104" fill="none" stroke="#ffffff" stroke-width="4" stroke-opacity="0.15"/>
+
+  <!-- Growth chart bars and trendline -->
+  <g filter="url(#shadow)" transform="translate(48, 48)">
+    <!-- Bar 1 -->
+    <rect x="48" y="240" width="48" height="120" rx="12" fill="#ffffff" fill-opacity="0.25"/>
+    <!-- Bar 2 -->
+    <rect x="128" y="180" width="48" height="180" rx="12" fill="#ffffff" fill-opacity="0.4"/>
+    <!-- Bar 3 -->
+    <rect x="208" y="120" width="48" height="240" rx="12" fill="#ffffff" fill-opacity="0.6"/>
+    <!-- Bar 4 -->
+    <rect x="288" y="60" width="48" height="300" rx="12" fill="#ffffff" fill-opacity="0.85"/>
+
+    <!-- Upward Trend Line -->
+    <path d="M 60 250 L 152 190 L 232 130 L 312 60" fill="none" stroke="url(#chart)" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Pulse dot at peak -->
+    <circle cx="312" cy="60" r="18" fill="#ffffff"/>
+    <circle cx="312" cy="60" r="10" fill="#34d399"/>
+  </g>
+
+  <!-- Letter M Monogram accent at bottom -->
+  <text x="256" y="445" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="44" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="8">MARKETIKA</text>
+</svg>
