@@ -9,6 +9,6 @@ createRoot(document.getElementById("root")!).render(
   </StrictMode>,
 );
 
-if (import.meta.env.PROD && "serviceWorker" in navigator) {
+if (import.meta.env.PROD && window.location.protocol.startsWith("http") && "serviceWorker" in navigator) {
   void navigator.serviceWorker.register("./sw.js");
 }

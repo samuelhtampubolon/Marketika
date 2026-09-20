@@ -18,6 +18,7 @@ Marketika computes marketing metrics from a registry of 76 formulas and 161 cano
 pnpm install
 pnpm dev        # local Marketika workbench
 pnpm build      # static GitHub Pages output in docs/
+pnpm desktop:build # Windows NSIS installer, after Rust is installed
 pnpm codegen   # emit typed sources from the spec
 pnpm verify    # spec and generated-output integrity checks
 pnpm typecheck

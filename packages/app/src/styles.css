@@ -40,11 +40,13 @@ button:focus-visible, input:focus-visible, select:focus-visible { outline: 1px d
 .sunken-input, .numeric-field { height: var(--control-height); background: var(--field); border: 1px solid var(--dark); border-right-color: var(--light); border-bottom-color: var(--light); box-shadow: inset 1px 1px 0 var(--shadow); padding: 2px 4px; }
 .sunken-input { width: 100%; }
 .formula-sidebar { min-width: 210px; }
-.calculator-layout { display: grid; grid-template-columns: 250px minmax(300px, 1fr) minmax(270px, 360px); gap: 10px; min-height: calc(100vh - 110px); }
+.calculator-layout { display: grid; grid-template-columns: minmax(210px, 230px) minmax(300px, 1fr) minmax(230px, 310px); gap: 10px; min-height: calc(100vh - 110px); }
+.calculator-layout > * { min-width: 0; }
 .formula-sidebar .groupbox { height: 100%; }
 .formula-sidebar .sunken-input + .sunken-input { margin-top: 5px; }
 .formula-list { margin-top: 7px; height: calc(100vh - 215px); overflow: auto; border: 1px solid var(--dark); border-right-color: var(--light); border-bottom-color: var(--light); background: var(--field); }
-.formula-row { display: grid; grid-template-columns: 55px 1fr; gap: 3px; width: 100%; border: 0; border-bottom: 1px dotted #aaa; background: var(--field); padding: 3px 5px; text-align: left; }
+.formula-row { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 4px; width: 100%; border: 0; border-bottom: 1px dotted #aaa; background: var(--field); padding: 3px 5px; text-align: left; }
+.formula-row strong { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .formula-row span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 .formula-row.selected { background: var(--selection); color: #fff; }
 .sidebar-count { color: var(--muted); margin: 4px 2px; }
@@ -52,7 +54,7 @@ button:focus-visible, input:focus-visible, select:focus-visible { outline: 1px d
 .input-group { min-height: 230px; }
 .formula-strip { border: 1px solid var(--dark); background: #fff; font-family: var(--font-mono); padding: 5px; margin: 0 0 12px; min-height: 28px; }
 .input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 8px 10px; }
-.numeric-label { display: grid; grid-template-columns: minmax(110px, 1fr) 120px 28px; gap: 5px; align-items: center; }
+.numeric-label { display: grid; grid-template-columns: minmax(110px, 1fr) minmax(100px, 140px) 34px; gap: 5px; align-items: center; }
 .numeric-field { width: 100%; text-align: right; font-family: var(--font-mono); }
 .numeric-label small { color: var(--muted); }
 .button-row { display: flex; gap: 6px; margin-top: 15px; }
@@ -117,5 +119,5 @@ th { background: var(--surface); position: sticky; top: 0; }
 .modal { width: 360px; background: var(--surface); border: 1px solid var(--light); border-right-color: var(--dark); border-bottom-color: var(--dark); padding: 18px 12px 12px; box-shadow: 2px 2px 0 #000; }
 .modal h2 { margin: 0 0 10px; }
 .modal-actions { display: flex; justify-content: flex-end; margin-top: 16px; }
-@media (max-width: 900px) { .calculator-layout, .solver-layout, .sensitivity-layout { grid-template-columns: 1fr; } .formula-list { height: 210px; } .statusbar { grid-template-columns: 1fr; height: auto; } .app-shell { grid-template-rows: 20px auto 30px 1fr auto; } .learn-layout { grid-template-columns: 1fr; } .module-list { display: flex; overflow: auto; } .module-list button { min-width: 170px; } }
+@media (max-width: 760px) { .calculator-layout, .solver-layout, .sensitivity-layout { grid-template-columns: 1fr; } .formula-list { height: 210px; } .statusbar { grid-template-columns: 1fr; height: auto; } .app-shell { grid-template-rows: 20px auto 30px 1fr auto; } .learn-layout { grid-template-columns: 1fr; } .module-list { display: flex; overflow: auto; } .module-list button { min-width: 170px; } }
 @media print { .menubar, .toolbar, .statusbar, .formula-sidebar, .report-actions, .modal-backdrop { display: none !important; } .app-shell { display: block; } .workspace { padding: 0; } .print-sheet { border: 0; min-height: auto; } body { background: #fff; } }

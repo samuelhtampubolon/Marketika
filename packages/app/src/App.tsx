@@ -2,13 +2,11 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   checkInputs,
   checkOutputRange,
-  derivationProse,
   formatByUnitClass,
   formatNumber,
   makeUserValue,
   propagate,
   relationsById,
-  variableRegistry,
   type Env,
   type PropagationResult,
 } from "@metrika/engine";
@@ -71,6 +69,17 @@ function numericEnv(values: Record<string, string>): Env {
   };
 }
 
+function expressionText(latex: string): string {
+  return latex
+    .replace(/\\dfrac\{([^{}]+)\}\{([^{}]+)\}/g, "$1 / $2")
+    .replace(/\\times/g, " x ")
+    .replace(/\\cdot/g, " x ")
+    .replace(/\\text\{([^{}]+)\}/g, "$1")
+    .replace(/[{}\\]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function formulaResult(formula: FormulaMeta, inputs: Record<string, string>): { value?: unknown; error?: string } {
   const relation = relationsById[formula.id];
   if (relation === undefined) return { error: "Relasi tidak ditemukan." };
@@ -126,17 +135,27 @@ function Calculator({ onOpenSolver, onResult, locale }: { onOpenSolver: (values:
   const formula = formulaById.get(selectedId) ?? formulas[0];
   const initialInputs = Object.fromEntries(Object.entries(formula?.worked_example.inputs ?? {}).map(([key, value]) => [key, String(value)]));
   const [inputs, setInputs] = useState<Record<string, string>>(initialInputs);
-  const [result, setResult] = useState<{ value?: unknown; error?: string }>({});
+  const [result, setResult] = useState<{ value?: unknown; error?: string }>(() => formula === undefined ? {} : formulaResult(formula, initialInputs));
 
   useEffect(() => {
     const next = Object.fromEntries(Object.entries(formula?.worked_example.inputs ?? {}).map(([key, value]) => [key, String(value)]));
     setInputs(next);
-    setResult({});
+    setResult(formula === undefined ? {} : formulaResult(formula, next));
   }, [formula]);
 
   const filtered = formulas.filter((item) => {
     const query = search.toLowerCase();
     return `${item.symbol} ${item.name.id} ${item.name.en}`.toLowerCase().includes(query);
+  });
+  const grouped = [...filtered].sort((a, b) => {
+    const group = (item: FormulaMeta): string => {
+      if (grouping === "phase") return item.taxonomy.axis_b.phase_name.id;
+      if (grouping === "class") return item.taxonomy.axis_c.class_name.id;
+      if (grouping === "domain") return item.taxonomy.axis_d.domain_name.id;
+      if (grouping === "alpha") return item.symbol;
+      return item.taxonomy.axis_a.stratum_name.id;
+    };
+    return `${group(a)} ${a.symbol}`.localeCompare(`${group(b)} ${b.symbol}`, "id");
   });
   const calculate = () => {
     if (formula !== undefined) {
@@ -158,7 +177,7 @@ function Calculator({ onOpenSolver, onResult, locale }: { onOpenSolver: (values:
           <option value="stratum">Menurut strata</option><option value="phase">Menurut fase</option><option value="class">Menurut kelas struktur</option><option value="domain">Menurut domain keputusan</option><option value="alpha">Menurut abjad</option>
         </select>
         <div className="formula-list" role="tree" aria-label="Daftar rumus">
-          {filtered.map((item) => <button key={item.id} className={`formula-row ${item.id === selectedId ? "selected" : ""}`} onClick={() => setSelectedId(item.id)} role="treeitem">
+          {grouped.map((item) => <button key={item.id} className={`formula-row ${item.id === selectedId ? "selected" : ""}`} onClick={() => setSelectedId(item.id)} role="treeitem">
             <strong>{item.symbol}</strong><span>{item.name.id}</span>
           </button>)}
         </div>
@@ -167,7 +186,7 @@ function Calculator({ onOpenSolver, onResult, locale }: { onOpenSolver: (values:
     </aside>
     <main className="calculator-center">
       <GroupBox title={`${formula?.symbol ?? ""} - ${formula?.name.id ?? ""}`} className="input-group">
-        <p className="formula-strip">{formula?.expression.latex}</p>
+        <p className="formula-strip">{formula === undefined ? "" : expressionText(formula.expression.latex)}</p>
         <div className="input-grid">
           {formula?.inputs.map((input) => {
             const variable = variableById.get(input.variable_id);
@@ -186,7 +205,7 @@ function Calculator({ onOpenSolver, onResult, locale }: { onOpenSolver: (values:
       </GroupBox>
       <GroupBox title="Penelusuran">
         <RaisedButton onClick={() => setDetails((open) => !open)}>{details ? "Sembunyikan rincian" : "Tampilkan rincian"} (F9)</RaisedButton>
-        {details && <pre className="derivation">{result.value === undefined ? "Hitung sebuah rumus untuk melihat penurunan." : `${formula?.expression.latex}\n\n${Object.entries(inputs).map(([id, value]) => `${label(id)} = ${value}`).join("\n")}\n\n${formula?.symbol} = ${display(outputId, result.value, locale)}`}</pre>}
+        {details && <pre className="derivation">{result.value === undefined ? "Masukan belum menghasilkan nilai." : `${formula === undefined ? "" : expressionText(formula.expression.latex)}\n\n${Object.entries(inputs).map(([id, value]) => `${label(id)} = ${value}`).join("\n")}\n\n${formula?.symbol} = ${display(outputId, result.value, locale)}`}</pre>}
       </GroupBox>
       <GroupBox title="Hal yang perlu diperiksa"><ul className="plain-list">{formula?.failure_modes.map((mode) => <li key={mode.description_id}>{mode.description_id}</li>)}</ul></GroupBox>
     </aside>
@@ -202,6 +221,16 @@ function Solver({ initialValues }: { initialValues: Record<string, string> }) {
     const map = new Map(Object.entries(known).filter(([, raw]) => raw !== "").map(([id, raw]) => [id, makeUserValue(id, Number(raw), variableById.get(id)?.unit_class ?? "unknown", "monthly")]));
     setPropagation(propagate(map, Object.values(relationsById), { maxGenerations: 12, locale: "id", unitClassOf: (id) => variableById.get(id)?.unit_class ?? "unknown" }));
   };
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.key === "Enter") {
+        event.preventDefault();
+        derive();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  });
   return <div className="solver-layout">
     <GroupBox title="Nilai yang diketahui" className="solver-known">
       <div className="add-row"><select className="sunken-input" value={selected} onChange={(event) => setSelected(event.target.value)}>{variables.filter((item) => item.unit_class !== "vector" && item.unit_class !== "matrix").map((item) => <option key={item.id} value={item.id}>{item.label.id}</option>)}</select><input className="numeric-field" value={value} onChange={(event) => setValue(event.target.value)} placeholder="Nilai" /><RaisedButton onClick={() => { if (value !== "") { setKnown((current) => ({ ...current, [selected]: value })); setValue(""); } }}>Tambah</RaisedButton></div>

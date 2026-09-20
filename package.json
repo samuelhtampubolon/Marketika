@@ -9,6 +9,8 @@
   "scripts": {
     "dev": "pnpm --filter @metrika/app dev",
     "build": "pnpm --filter @metrika/app build",
+    "desktop:dev": "pnpm --filter @marketika/desktop dev",
+    "desktop:build": "pnpm --filter @marketika/desktop build",
     "codegen": "pnpm --filter @metrika/codegen codegen",
     "verify": "pnpm --filter @metrika/codegen verify",
     "typecheck": "pnpm -r typecheck",

@@ -1,0 +1,19 @@
+[package]
+name = "marketika"
+version = "0.1.0"
+description = "Marketika quantitative marketing workbench"
+authors = ["Marketika"]
+edition = "2021"
+
+[lib]
+name = "marketika_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+
+[features]
+custom-protocol = ["tauri/custom-protocol"]
