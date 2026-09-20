@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "bin": {
-    "metrika-hello": "./bin/metrika-hello.mjs"
+    "marketika-hello": "./bin/marketika-hello.mjs"
   },
   "scripts": {
-    "hello": "node ./bin/metrika-hello.mjs",
+    "hello": "node ./bin/marketika-hello.mjs",
     "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run --passWithNoTests"
   },
