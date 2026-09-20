@@ -9,7 +9,7 @@ Hitung CTR, conversion rate, CAC, ROI, AOV, ROAS, LTV, dan puluhan metrik lain d
 | Kebutuhan | Tautan | Cara mulai |
 | --- | --- | --- |
 | Pakai sekarang di browser | **[BUKA WEBSITE MARKETIKA](https://samuelhtampubolon.github.io/Marketika/)** | Klik, lalu langsung gunakan. Tidak perlu instalasi. |
-| Pakai lokal tanpa internet | **[DOWNLOAD MARKETIKA OFFLINE - ZIP](https://github.com/samuelhtampubolon/Marketika/releases/download/v1/Marketika-0.1.0-offline.zip)** | Ekstrak ZIP, lalu buka `index.html`. |
+| Pakai lokal tanpa internet | **[DOWNLOAD MARKETIKA OFFLINE - ZIP](https://github.com/samuelhtampubolon/Marketika/actions/runs/35506198971/artifacts/10604241106  ; https://github.com/samuelhtampubolon/Marketika/releases/download/v1/Marketika-0.1.0-offline.zip)** | Ekstrak ZIP, lalu buka `index.html`. |
 | Lihat versi dan berkas resmi | [Buka halaman Releases](https://github.com/samuelhtampubolon/Marketika/releases) | Pilih versi yang ingin digunakan. |
 
 > **Belum yakin?** Buka Website untuk mencoba dalam hitungan detik. Pilih Offline ZIP bila aplikasi perlu tetap tersedia di komputer tanpa koneksi internet.
