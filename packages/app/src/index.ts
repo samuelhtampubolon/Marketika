@@ -1,2 +1,2 @@
-// Application entry point arrives in phase P09 (calculator screen) with Vite.
-export const APP_NAME = "MetriKa";
+export const APP_NAME = "Marketika";
+export const APP_VERSION = "0.1.0";

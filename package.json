@@ -1,5 +1,5 @@
 {
-  "name": "metrika",
+  "name": "marketika",
   "version": "0.0.0",
   "private": true,
   "packageManager": "pnpm@12.4.2",
@@ -7,6 +7,8 @@
     "node": ">=20"
   },
   "scripts": {
+    "dev": "pnpm --filter @metrika/app dev",
+    "build": "pnpm --filter @metrika/app build",
     "codegen": "pnpm --filter @metrika/codegen codegen",
     "verify": "pnpm --filter @metrika/codegen verify",
     "typecheck": "pnpm -r typecheck",

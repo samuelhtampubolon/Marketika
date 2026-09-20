@@ -3,6 +3,7 @@ import { emitGoldenTests } from "./emitGoldenTests";
 import { emitLocale } from "./emitLocale";
 import { emitCurriculum } from "./emitCurriculum";
 import { emitRegistry } from "./emitRegistry";
+import { emitAppCatalog } from "./emitAppCatalog";
 import { readSpec } from "./spec";
 
 function main(): void {
@@ -15,6 +16,7 @@ function main(): void {
   console.log(`codegen: emitted ${g.files} golden test files (${g.cases} cases)`);
   emitLocale(spec);
   emitCurriculum(spec);
+  emitAppCatalog(spec);
   console.log("codegen: complete");
 }
 

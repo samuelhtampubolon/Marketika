@@ -1,6 +1,6 @@
-# MetriKa
+# Marketika
 
-MetriKa computes marketing metrics from a registry of 76 formulas and 161 canonical variables. It runs in a browser and as a desktop application, with no network access at runtime. All definitions live in `spec/metrika.spec.json`; code generation produces the typed sources from it.
+Marketika computes marketing metrics from a registry of 76 formulas and 161 canonical variables. It runs as a local web application and keeps the calculation engine separate from the interface. The source specification remains `spec/metrika.spec.json`; generated sources and the Marketika catalog come from it.
 
 ## Layout
 
@@ -16,6 +16,8 @@ MetriKa computes marketing metrics from a registry of 76 formulas and 161 canoni
 
 ```
 pnpm install
+pnpm dev        # local Marketika workbench
+pnpm build      # static GitHub Pages output in docs/
 pnpm codegen   # emit typed sources from the spec
 pnpm verify    # spec and generated-output integrity checks
 pnpm typecheck
