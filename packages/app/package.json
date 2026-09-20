@@ -3,7 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "bin": {
+    "metrika-hello": "./bin/metrika-hello.mjs"
+  },
   "scripts": {
+    "hello": "node ./bin/metrika-hello.mjs",
     "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run --passWithNoTests"
   },
