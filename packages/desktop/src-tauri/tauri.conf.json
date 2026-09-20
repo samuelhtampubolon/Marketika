@@ -6,8 +6,8 @@
   "build": {
     "beforeDevCommand": "pnpm --filter @metrika/app dev -- --host 127.0.0.1",
     "devUrl": "http://127.0.0.1:5173",
-    "beforeBuildCommand": "pnpm --filter @metrika/app build -- --outDir ../desktop/dist",
-    "frontendDist": "../dist"
+    "beforeBuildCommand": "pnpm --filter @metrika/app build",
+    "frontendDist": "../../../docs"
   },
   "app": {
     "windows": [
